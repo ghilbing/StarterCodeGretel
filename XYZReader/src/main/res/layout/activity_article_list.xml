@@ -10,7 +10,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/theme_accent"
+            android:fitsSystemWindows="true"
             android:theme="@style/AppTheme.AppBarOverlay">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:id="@+id/collapsing_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                app:contentScrim="@color/theme_accent"
+                app:expandedTitleMarginStart="48dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlwaysCollapsed">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -30,6 +40,7 @@
                         android:contentDescription="@string/app_name" />
                 </RelativeLayout>
             </android.support.v7.widget.Toolbar>
+            </android.support.design.widget.CollapsingToolbarLayout>
 
         </android.support.design.widget.AppBarLayout>
 
@@ -50,7 +61,7 @@
                 android:layout_height="match_parent"
                 android:clipToPadding="false"
                 android:paddingLeft="@dimen/list_side_margin"
-                android:paddingTop="60dp"
+                android:paddingTop="8dp"
                 android:paddingRight="@dimen/list_side_margin"
                 android:paddingBottom="28dp"
                 android:scrollbarStyle="outsideOverlay" />

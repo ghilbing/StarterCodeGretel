@@ -167,7 +167,8 @@ public class SelectionBuilder {
         for (int i = 0; i < columns.length; i++) {
             final String target = mProjectionMap.get(columns[i]);
             if (target != null) {
-                columns[i] = target;
+                String targetWithoutSpaces = target.replace("\n","").replace("r","");
+                columns[i] = targetWithoutSpaces;
             }
         }
     }

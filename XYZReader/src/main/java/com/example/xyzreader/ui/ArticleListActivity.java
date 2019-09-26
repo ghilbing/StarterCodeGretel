@@ -8,10 +8,12 @@ import android.content.IntentFilter;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Rect;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.support.v7.widget.Toolbar;
@@ -47,6 +49,9 @@ public class ArticleListActivity extends AppCompatActivity implements
     private Toolbar mToolbar;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
+    private LinearLayoutManager mLayoutManager;
+
+    private Drawable mDrawable;
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
     // Use default locale format
@@ -61,6 +66,8 @@ public class ArticleListActivity extends AppCompatActivity implements
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
 
+        mDrawable = getResources().getDrawable(R.drawable.padded_divider);
+
        // final View toolbarContainerView = findViewById(R.id.toolbar_container);
 
         mSwipeRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe_refresh_layout);
@@ -70,18 +77,10 @@ public class ArticleListActivity extends AppCompatActivity implements
         //mToolbar.setTitle(R.string.app_name);
 
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        mRecyclerView.addItemDecoration(new RecyclerView.ItemDecoration() {
-            @Override
-            public void getItemOffsets(@NonNull Rect outRect, @NonNull View view, @NonNull RecyclerView parent, @NonNull RecyclerView.State state) {
-                super.getItemOffsets(outRect, view, parent, state);
-                int space_btw_cards = (int) getResources().getDimension(R.dimen.cards_space_btw);
-                if (parent.getChildAdapterPosition(view) % 2 ==0){
-                    outRect.right = space_btw_cards;
-                }
-                outRect.top = space_btw_cards;
-                outRect.bottom = space_btw_cards;
-            }
-        });
+        mLayoutManager = new LinearLayoutManager(getApplicationContext());
+
+        RecyclerView.ItemDecoration dividerItemDecoration = new DividerItemDecoration(this, mDrawable, mLayoutManager.getOrientation());
+        mRecyclerView.addItemDecoration(dividerItemDecoration);
         getLoaderManager().initLoader(0, null, this);
 
         if (savedInstanceState == null) {
