@@ -11,4 +11,7 @@
     <dimen name="cards_padding">16dp</dimen>
     <dimen name="cards_space_btw">8dp</dimen>
 
+    <dimen name="card_title">15sp</dimen>
+    <dimen name="card_subtitle">12sp</dimen>
+
 </resources>
