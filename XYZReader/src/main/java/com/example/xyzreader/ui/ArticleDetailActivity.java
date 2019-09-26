@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v13.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowInsets;
+import android.widget.ZoomControls;
 
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
@@ -24,7 +26,7 @@ import com.example.xyzreader.data.ItemsContract;
  * An activity representing a single Article detail screen, letting you swipe between articles.
  */
 public class ArticleDetailActivity extends AppCompatActivity
-        implements LoaderManager.LoaderCallbacks<Cursor> {
+        implements LoaderManager.LoaderCallbacks<Cursor>, ViewPager.PageTransformer {
 
     private Cursor mCursor;
     private long mStartId;
@@ -52,6 +54,7 @@ public class ArticleDetailActivity extends AppCompatActivity
 
         mPagerAdapter = new MyPagerAdapter(getFragmentManager());
         mPager = (ViewPager) findViewById(R.id.pager);
+        mPager.setPageTransformer(true, new ZoomOutPageTransformer());
         mPager.setAdapter(mPagerAdapter);
         mPager.setPageMargin((int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics()));
@@ -149,6 +152,11 @@ public class ArticleDetailActivity extends AppCompatActivity
     private void updateUpButtonPosition() {
         int upButtonNormalBottom = mTopInset + mUpButton.getHeight();
         mUpButton.setTranslationY(Math.min(mSelectedItemUpButtonFloor - upButtonNormalBottom, 0));
+    }
+
+    @Override
+    public void transformPage(@NonNull View view, float v) {
+
     }
 
     private class MyPagerAdapter extends FragmentStatePagerAdapter {
